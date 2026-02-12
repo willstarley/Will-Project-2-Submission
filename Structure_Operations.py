@@ -27,7 +27,7 @@ def StaticallyDeterminate(nodes,bars):
     
     # Compute if b + r = 2j (Equation 3-1 of the textbook)
     if(n_bars + n_reactions < 2*n_nodes):
-        sys.exit("The truss is unstable")
+        sys.exit("The truss is unstable; did you input all of the reaction constraints correctly?")
     elif(n_bars + n_reactions > 2*n_nodes):
         sys.exit("The truss is statically indeterminate, and cannot be resolved using method of joints")
     else:
@@ -53,9 +53,40 @@ def ComputeReactions(nodes):
     
     # Continue from here
     # Sum of moments about the pin
-
-    # sum of forces in y direction
-
-    # sum of forces in x direction
+    [pin_x, pin_y] = pin_node.location # Gets x and y coordinates of pin
+    [roller_x, roller_y] = roller_node.location # Gets x and y coordinates of roller
     
+    roller_reaction = 0
+    for node in nodes:
+        [node_x, node_y] = node.location
+        # contributions in the y direction
+        roller_reaction += node.yforce_external * (node_x - pin_x)
+        # contributions in the x direction
+        roller_reaction += node.xforce_external * (pin_y - node_y)
+        
+    if(roller_node.constraint == "roller_no_xdisp"):
+        roller_reaction = -roller_reaction / (pin_y - roller_y)
+        roller_node.AddReactionXForce(roller_reaction)
+    elif(roller_node.constraint == "roller_no_ydisp"):
+        roller_reaction = -roller_reaction / (roller_x - pin_x)
+        roller_node.AddReactionYForce(roller_reaction)
+        
+    # sum of forces in y direction
+    sum_force_y = 0
+    for node in nodes:
+        sum_force_y += node.yforce_external
+        
+    # sum of forces in x direction
+    sum_force_x = 0
+    for node in nodes:
+        sum_force_x -= node.xforce_external
+        
+    if(roller_node.constraint=="roller_no_xdisp"):
+        sum_force_x += roller_reaction
+        
+    elif(roller_node.constraint=="roller_no_ydisp"):
+        sum_force_y += roller_reaction
+        
+    pin_node.AddReactionYForce(-sum_force_y)
+    pin_node.AddReactionXForce(-sum_force_x)
     
