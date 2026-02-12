@@ -30,6 +30,9 @@ def NodeIsViable(node):
 # forces in the x direction
 def SumOfForcesInLocalX(node, unknown_bars):
 
+    if not isinstance(unknown_bars, list):
+        unknown_bars = [unknown_bars]
+
     # First unknown bar defines local x-axis
     local_x_bar = unknown_bars[0]
 
