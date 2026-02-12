@@ -63,8 +63,7 @@ def BarsToVectors(bar_1,bar_2):
     shared_node = FindSharedNode(bar_1,bar_2)
     vec1 = BarNodeToVector(shared_node,bar_1)
     vec2 = BarNodeToVector(shared_node,bar_2)
-    return vec1
-    return vec2
+    return vec1, vec2
 # ^^ There appears to be an error somewhere here
 
 # Cross product of two vectors
