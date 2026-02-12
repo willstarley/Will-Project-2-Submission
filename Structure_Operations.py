@@ -79,7 +79,7 @@ def ComputeReactions(nodes):
     # sum of forces in x direction
     sum_force_x = 0
     for node in nodes:
-        sum_force_x -= node.xforce_external
+        sum_force_x += node.xforce_external
         
     if(roller_node.constraint=="roller_no_xdisp"):
         sum_force_x += roller_reaction
