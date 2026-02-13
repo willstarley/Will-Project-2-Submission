@@ -84,5 +84,5 @@ Q82::11.33
 Q83::N
 Q84::N
 Q85::N
-Q86::
-Q87::
+Q86:: The Gabled Howe Eight Panel has the lowest max force in its beams, but uses the most material out of the three trusses. The Modified Fan Six Panel uses less material and has some zero-force members present, but the load at the top node is far higher than the other trusses. The Scissor Truss Eight Panel uses the least material out of the three and is aesthetically interesting, but also has far higher forces in its beams.
+Q87:: I think the Modified Fan Six Panel is the best choice because it has the lowest average loads amongst its members, some zero force members, and uses the least material, so it will be the least expensive as well
